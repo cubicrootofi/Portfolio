@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Portfolio
 
 A static site with no build step: `index.html`, `assets/style.css`, `assets/main.js`, `assets/field.js`, plus screenshots in `assets/media/`.
@@ -67,3 +68,6 @@ The screenshots and several descriptions cover internal Dar tools. Two of the sc
 ## Deploy
 
 Any static host works: GitHub Pages (push the folder, enable Pages), Netlify or Vercel (drag and drop the folder), or Cloudflare Pages.
+=======
+Portfolio for my work
+>>>>>>> 17df06e58462d9e6868029f61fc8b2b2bff7db73
