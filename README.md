@@ -15,7 +15,7 @@ Then open http://localhost:5174.
 
 ## Fill in the placeholders
 
-Everything still to replace has `class="ph"` and shows a dashed ember underline on the page. Search `index.html` for `class="ph"`:
+Everything still to replace has `class="ph"` and shows a dashed violet underline on the page. Search `index.html` for `class="ph"`:
 
 - Facts under the statement: years of experience, city
 - ORCA: your role on it (the repository belongs to another account)
@@ -33,6 +33,30 @@ Copy a `<li class="work__row">` block. For the hover preview, either:
 - give the `<li>` a `data-img="assets/media/your-shot.png"` and put an `<img>` in `.work__thumb`, or
 - give it `data-kind="…"` and the thumb `data-plate="…"`, which draws a sheet in the same style.
   Kinds: `chat`, `mesh`, `typed`, `pair`, `slab`, `joint`, `tiles`, `tokens`, `drift`, `ph`.
+
+## Adding a video
+
+Anywhere an image goes, a `<video>` works too: in a project's `.work__thumb`, or in a gallery `.shot__frame`.
+
+```html
+<div class="work__thumb">
+  <video src="assets/media/delta-demo.mp4" poster="assets/media/etabs-delta.png"
+         aria-label="ETABS Delta running a full comparison" muted loop playsinline></video>
+</div>
+```
+
+- It plays muted and looping while it's on screen, and pauses when it isn't. With reduced motion turned on, it stays on the poster.
+- The row's hover preview uses the same clip automatically. To preview a different, shorter clip, put `data-video="assets/media/short.mp4"` on the `<li>`.
+- Clicking it opens the lightbox with player controls, continuing from the same moment. It starts muted; add `data-sound` to the `<video>` to start with sound.
+- The `aria-label` becomes the caption in the lightbox.
+
+Keep clips short (10 to 30 s), about 1280 px wide, and a few MB each. Windows' Snipping Tool can record the screen. To shrink a recording:
+
+```
+ffmpeg -i input.mp4 -vf "scale=1280:-2" -c:v libx264 -crf 26 -preset slow -an -movflags +faststart assets/media/clip.mp4
+```
+
+`-an` drops the audio track; leave it out if the clip has narration. `+faststart` lets the clip start before it has fully downloaded.
 
 Bump the `?v=` on the CSS/JS links in `index.html` when you change them, so browsers don't serve a stale copy.
 

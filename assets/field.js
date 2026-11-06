@@ -111,9 +111,9 @@ void main() {
 
   vec3 bg = vec3(0.039, 0.039, 0.043);
   vec3 ink = vec3(0.925, 0.914, 0.89);
-  vec3 ember = vec3(1.0, 0.357, 0.18);
-  vec3 lc = mix(ink, ember, smoothstep(0.08, 0.6, heat));
-  vec3 col = bg + lc * line * alpha * vig + ember * heat * 0.03 * vig;
+  vec3 accent = vec3(0.663, 0.588, 0.886);
+  vec3 lc = mix(ink, accent, smoothstep(0.08, 0.6, heat));
+  vec3 col = bg + lc * line * alpha * vig + accent * heat * 0.03 * vig;
   outColor = vec4(col, 1.0);
 }`;
 

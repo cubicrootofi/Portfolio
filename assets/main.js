@@ -16,6 +16,7 @@
   startClock();
   setupAccordion();
   lightbox();
+  inlineVideos();
 
   if (!motion) {
     html.classList.add('no-motion');
@@ -335,9 +336,10 @@
 
     thumbs.forEach(t => {
       const title = $('.work__title', t.closest('.work__row'))?.textContent.trim();
+      const kind = $('video', t) ? 'video' : 'image';
       t.tabIndex = 0;
       t.setAttribute('role', 'button');
-      t.setAttribute('aria-label', title ? `Expand image: ${title}` : 'Expand image');
+      t.setAttribute('aria-label', title ? `Expand ${kind}: ${title}` : `Expand ${kind}`);
       t.dataset.cursor = 'Expand';
       t.addEventListener('click', () => open(t));
       t.addEventListener('keydown', e => {
@@ -345,7 +347,8 @@
       });
     });
 
-    box.addEventListener('click', close);
+    // clicks on a video's controls must not dismiss it
+    box.addEventListener('click', e => { if (!e.target.closest('video')) close(); });
     document.addEventListener('keydown', e => {
       if (box.hidden) return;
       if (e.key === 'Escape') close();
@@ -373,9 +376,24 @@
       if (state !== 'closed') return;
       state = 'opening';
       current = t;
+      const vid = $('video', t);
       const src = $('img', t);
       frame.innerHTML = '';
-      if (src) {
+      if (vid) {
+        // a full-size copy with controls, picking up where the inline clip was
+        ratio = vid.videoWidth ? vid.videoWidth / vid.videoHeight : 16 / 9;
+        const v = vid.cloneNode(true);
+        v.controls = true;
+        v.loop = true;
+        v.playsInline = true;
+        v.muted = !vid.hasAttribute('data-sound');
+        v.dataset.cursor = '';
+        v.addEventListener('loadedmetadata', () => { v.currentTime = vid.currentTime; }, { once: true });
+        vid.pause();
+        frame.append(v);
+        v.play().catch(() => {});
+        cap.textContent = vid.getAttribute('aria-label') || $('.work__title', t.closest('.work__row'))?.textContent.trim() || '';
+      } else if (src) {
         // the thumbnail is already loaded, so its proportions are known up front
         ratio = src.naturalWidth ? src.naturalWidth / src.naturalHeight : 16 / 10;
         const img = new Image();
@@ -411,6 +429,11 @@
       tl?.kill();
       const t = current;
       const done = () => {
+        const lv = $('video', frame), tv = $('video', t);
+        if (lv && tv) {
+          tv.currentTime = lv.currentTime;
+          if (!reduce) tv.play().catch(() => {});
+        }
         box.hidden = true;
         frame.innerHTML = '';
         t.style.visibility = '';
@@ -427,6 +450,29 @@
     }
   }
 
+  // Clips in project thumbnails and the gallery play muted while on screen and pause once
+  // they leave it. With reduced motion they stay on their poster; the lightbox still plays them.
+  function inlineVideos() {
+    const vids = $$('.work__thumb video, .shot__frame video');
+    if (!vids.length) return;
+    vids.forEach(v => {
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.setAttribute('playsinline', '');
+      v.controls = false;
+      v.disablePictureInPicture = true;
+      if (!v.hasAttribute('preload')) v.preload = 'metadata';
+    });
+    if (reduce) return;
+    const io = new IntersectionObserver(entries => entries.forEach(({ target: v, isIntersecting }) => {
+      const expanded = v.closest('.work__thumb')?.style.visibility === 'hidden';
+      if (isIntersecting && !expanded) v.play().catch(() => {});
+      else v.pause();
+    }), { threshold: 0.35 });
+    vids.forEach(v => io.observe(v));
+  }
+
   // A floating preview that trails the cursor across the work list.
   function workPreview() {
     if (!fine || !matchMedia('(min-width: 900px)').matches) return;
@@ -438,7 +484,19 @@
     const items = rows.map(row => {
       const item = document.createElement('div');
       item.className = 'preview__item';
-      if (row.dataset.img) {
+      const thumbVid = $('.work__thumb video', row);
+      const clip = row.dataset.video
+        || (thumbVid && (thumbVid.getAttribute('src') || $('source', thumbVid)?.getAttribute('src')));
+      if (clip) {
+        const v = document.createElement('video');
+        v.src = clip;
+        v.muted = true;
+        v.loop = true;
+        v.playsInline = true;
+        v.setAttribute('playsinline', '');
+        v.preload = 'none';
+        item.append(v);
+      } else if (row.dataset.img) {
         const img = new Image();
         img.src = row.dataset.img;
         img.alt = '';
@@ -458,9 +516,16 @@
     let active = -1, z = 1, shown = false, lastX = 0, rot = 0, pw = preview.offsetWidth;
     window.addEventListener('resize', () => { pw = preview.offsetWidth; });
 
+    // only the active preview's clip runs; everything pauses when the preview hides
+    const playOnly = i => items.forEach((it, j) => {
+      const v = $('video', it);
+      if (!v) return;
+      if (j === i) { v.preload = 'auto'; v.play().catch(() => {}); } else v.pause();
+    });
     const show = on => {
       if (on === shown) return;
       shown = on;
+      if (!on) playOnly(-1);
       gsap.to(preview, { opacity: on ? 1 : 0, scale: on ? 1 : 0.7, duration: 0.6, ease: 'expo.out', overwrite: 'auto' });
     };
     const activate = i => {
@@ -489,6 +554,7 @@
       if (row.classList.contains('is-open')) { show(false); return; }
       show(true);
       activate(i);
+      playOnly(i);
     };
     previewFor = row => sync(row, rows.indexOf(row));
 
@@ -531,7 +597,7 @@
         },
       });
       shots.forEach(s => {
-        gsap.fromTo($('img', s), { xPercent: -4 }, {
+        gsap.fromTo($('img, video', s), { xPercent: -4 }, {
           xPercent: 4, ease: 'none',
           scrollTrigger: { trigger: s, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true },
         });
