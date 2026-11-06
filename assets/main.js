@@ -246,7 +246,7 @@
       });
     });
 
-    $$('.label, .section__note, .gallery__quote, .gallery__lede, .gallery__facts, .contact__row, .kit__grid > div').forEach(el => {
+    $$('.label, .section__note, .gallery__quote, .gallery__lede, .gallery__facts, .contact__row, .kit__grid > div, .ibeam__note, .ibeam__spec').forEach(el => {
       gsap.from(el, {
         y: 24, opacity: 0, duration: 1.1, ease: 'expo.out',
         scrollTrigger: { trigger: el, start: 'top 92%' },
