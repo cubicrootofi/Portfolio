@@ -12,7 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=7">
+  <link rel="stylesheet" href="assets/style.css?v=8">
+  <link rel="stylesheet" href="assets/scenes.css?v=3">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -57,6 +58,15 @@
       <span class="hero__line hero__line--indent" aria-hidden="true"><span data-chars><em>Sedik</em></span></span>
     </h1>
 
+    <figure class="scene scene--puppet hero__puppet" data-scene="puppet">
+      <div class="scene__kicker mono"><span>01 / Three storeys on strings</span><span aria-hidden="true">2 × 2 bays</span></div>
+      <div class="scene__surface" tabindex="0" role="group" aria-label="Interactive three-storey frame hung from strings" aria-describedby="puppet-help">
+        <img class="scene__fallback" src="assets/frame.svg" alt="" width="700" height="700">
+        <canvas aria-hidden="true"></canvas>
+      </div>
+      <figcaption class="scene__caption"><span class="scene__hint mono" id="puppet-help">Move or drag to pull the strings and sway the frame · Arrow keys to push</span><button class="scene__reset mono" type="button" data-reset>Reset ↺</button></figcaption>
+    </figure>
+
     <div class="hero__bottom">
       <p class="hero__intro">A structural engineer who writes the software engineers design with: add-ins, solvers and AI assistants for ETABS, SAP2000, Revit and Rhino.</p>
       <span class="hero__readout mono" data-readout aria-hidden="true">x 0.660 · y 0.580 · P 00.0 kN</span>
@@ -96,7 +106,7 @@
       <h2 class="ibeam__title" id="ibeam-title" data-split>Code,<br><em>structured</em>.</h2>
     </div>
   </section>
-
+  
   <!-- ============ MARQUEE ============ -->
   <section class="marquee" aria-label="Software I build on">
     <div class="marquee__track" data-marquee>
@@ -115,6 +125,26 @@
       </div>
     </div>
   </section>
+
+  <!-- ============ TENSEGRITY ============ -->
+  <section class="kinetic section" id="equilibrium" aria-labelledby="equilibrium-title">
+    <div class="kinetic__copy">
+      <p class="label mono"><span>Study / 02</span> Equilibrium</p>
+      <h2 class="kinetic__title" id="equilibrium-title" data-split>A little tension.<br>A lot of <em>possibilities.</em></h2>
+      <p>Independent parts. One connected system. A study in the balance between what holds and what moves.</p>
+      <div class="kinetic__legend mono"><span><i class="legend-bar"></i> Compression</span><span><i class="legend-cable"></i> Tension</span></div>
+      <p class="kinetic__aside mono">Six floating struts.<br>One continuous conversation.</p>
+    </div>
+    <figure class="scene scene--tensegrity" data-scene="tensegrity">
+      <div class="scene__kicker mono"><span>02 / Tensegrity</span><span>6 struts · 24 cables</span></div>
+      <div class="scene__surface" tabindex="0" role="group" aria-label="Interactive tensegrity sculpture" aria-describedby="tensegrity-help">
+        <img class="scene__fallback" src="assets/tensegrity.svg" alt="" width="700" height="620" loading="lazy"><canvas aria-hidden="true"></canvas>
+      </div>
+      <div class="scene__control"><label class="mono" for="tension">Spread</label><input id="tension" type="range" min="0" max="100" value="45" aria-label="Tensegrity spread"><output class="mono" for="tension">45%</output></div>
+      <figcaption class="scene__caption"><span class="scene__hint mono" id="tensegrity-help">Drag a joint to stretch · Drag space or use arrow keys to turn</span><button class="scene__reset mono" type="button" data-reset>Reset ↺</button></figcaption>
+    </figure>
+  </section>
+
 
   <!-- ============ WORK ============ -->
   <section class="work section" id="work">
@@ -231,7 +261,7 @@
 
       <li class="work__row" data-img="assets/media/ideastatica-home.png">
         <button class="work__head" aria-expanded="false" aria-controls="w-idea" data-cursor="Open">
-          <span class="work__num mono">07</span>
+          <span class="work__num mono">05</span>
           <span class="work__title">IDEA StatiCa Assistant</span>
           <span class="work__desc">SAP2000 joints into connection design</span>
           <span class="work__tags mono">SAP2000 · IDEA StatiCa</span>
@@ -255,7 +285,7 @@
 
       <li class="work__row" data-img="assets/media/cdt-buttons.png">
         <button class="work__head" aria-expanded="false" aria-controls="w-sdk" data-cursor="Open">
-          <span class="work__num mono">10</span>
+          <span class="work__num mono">06</span>
           <span class="work__title">CDT.SDK</span>
           <span class="work__desc">The design system behind the team's tools</span>
           <span class="work__tags mono">WPF · Design system</span>
@@ -265,27 +295,27 @@
           <div class="work__body-inner">
             <div class="work__thumb"><img src="assets/media/cdt-buttons.png" alt="CDT.SDK" loading="lazy"></div>
             <div class="work__copy">
-              <p>Shared WPF theme and window chrome for the Computational Design Team's add-ins: dark and light palettes, accent tokens, tool windows that follow the theme, and a versioned theme dictionary so several add-ins can share one Revit process without breaking each other's styles.</p>
+              <p>Shared WPF theme and window chrome for the UI/UX: dark and light palettes, accent tokens, tool windows that follow the theme, and a versioned theme dictionary so several add-ins can share one Revit process without breaking each other's styles.</p>
               <p class="work__stack mono">C# · WPF · XAML</p>
             </div>
           </div>
         </div>
       </li>
 
-      <li class="work__row" data-kind="drift" data-code="11 · ORCA">
+      <li class="work__row" data-img="assets/media/orca-wall3.png">
         <button class="work__head" aria-expanded="false" aria-controls="w-orca" data-cursor="Open">
-          <span class="work__num mono">11</span>
-          <span class="work__title">ORCA</span>
-          <span class="work__desc">Explore and automate ETABS from Python</span>
-          <span class="work__tags mono">Python · ETABS</span>
+          <span class="work__num mono">07</span>
+          <span class="work__title">Orca · Retaining Wall Design</span>
+          <span class="work__desc">Thorough analysis and design of retaining walls</span>
+          <span class="work__tags mono">Python · PySide6</span>
           <span class="work__plus" aria-hidden="true"></span>
         </button>
         <div class="work__body" id="w-orca" hidden>
           <div class="work__body-inner">
-            <div class="work__thumb" data-plate="drift" data-code="11 · ORCA"></div>
+            <div class="work__thumb"><img src="assets/media/orca-wall1.png" alt="Orca · Retaining Wall Design" loading="lazy"></div>
             <div class="work__copy">
-              <p>A PySide6 desktop app for exploring ETABS models over the COM API: story drifts, slab design contours, pier contributions, and batch edits through ETABS's editable tables.</p>
-              <p class="work__stack mono">Python · PySide6 · pandas · ETABS COM · Role: <span class="ph">Contributor</span></p>
+              <p>A PySide6 desktop app for designing and analyzing retaining walls.</p>
+              <p class="work__stack mono">Python · PySide6 · Role: Contributor</p>
             </div>
           </div>
         </div>
@@ -369,7 +399,100 @@
     </div>
   </section>
 
+  <!-- ============ CONNECTION ============ -->
+  <section class="kinetic kinetic--connection section" id="connection" aria-labelledby="connection-title">
+    <figure class="scene scene--connection" data-scene="connection">
+      <div class="scene__kicker mono"><span>03 / Putting pieces together</span><span>Beam → column</span></div>
+      <div class="scene__surface" tabindex="0" role="group" aria-label="Interactive exploded steel connection" aria-describedby="connection-help">
+        <img class="scene__fallback" src="assets/connection.svg" alt="" width="700" height="620" loading="lazy"><canvas aria-hidden="true"></canvas>
+      </div>
+      <div class="scene__control"><label class="mono" for="assembly">Assembly</label><input id="assembly" type="range" min="0" max="100" value="0" aria-label="Steel connection assembly progress"><output class="mono" for="assembly">0%</output></div>
+      <figcaption class="scene__caption"><span class="scene__hint mono" id="connection-help">Scroll to assemble · Drag or use arrow keys to turn</span><button class="scene__reset mono" type="button" data-reset>Reset ↺</button></figcaption>
+    </figure>
+    <div class="kinetic__copy">
+      <p class="label mono"><span>Study / 03</span> Into the details</p>
+      <h2 class="kinetic__title" id="connection-title" data-split>Every detail.<br>A <em>purpose.</em></h2>
+      <ol class="connection__parts mono">
+        <li><span>01</span> S&amp;B Toolbox</li>
+        <li><span>02</span> CSi Co-Pilot</li>
+        <li><span>03</span> Canopus</li>
+        <li><span>04</span> Revit × Steel</li>
+        <li><span>05</span> IDEA StatiCa Assistant</li>
+        <li><span>06</span> CDT.SDK</li>
+        <li><span>07</span> Orca · Retaining Wall Design</li>
+    </div>
+  </section>
+
   <!-- ============ CASE STUDY ============ -->
+  <section class="gallery" id="sb-toolbox">
+    <div class="gallery__intro">
+      <p class="label mono"><span>(04)</span> Case study</p>
+      <h2 class="gallery__title" data-split>ETABS <em>Co-Pilot</em></h2>
+      <p class="gallery__quote">The model work, between the analyses.</p>
+      <p class="gallery__lede">One sidebar inside ETABS that merges models, diffs two versions element by element, pushes geometry to RAM and spColumn, exports tables for Power BI, and keeps an AI assistant a click away.</p>
+      <dl class="gallery__facts mono">
+        <div><dt>Role</dt><dd><span class="ph">Lead developer</span></dd></div>
+        <div><dt>Stack</dt><dd>C# · WPF · CSi OAPI</dd></div>
+        <div><dt>Users</dt><dd><span class="ph">Dar structural teams</span></dd></div>
+      </dl>
+      <div class="gallery__progress mono" aria-hidden="true">
+        <span data-gal-count>01</span>
+        <div class="gallery__bar"><i></i></div>
+        <span>08</span>
+      </div>
+    </div>
+
+    <div class="gallery__viewport">
+      <div class="gallery__track">
+        <figure class="shot">
+          <div class="shot__frame"><img src="assets/media/etabs-delta.png" alt="ETABS Delta: per-field match rates for materials between two ETABS models" decoding="async"></div>
+          <figcaption class="mono"><span>Fig 01</span> ETABS Delta · setup and results, diffed field by field</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot__frame"><img src="assets/media/etabs-merger.png" alt="ETABS Merger tool" decoding="async"></div>
+          <figcaption class="mono"><span>Fig 02</span> ETABS Merger · elements carried across with every assignment</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot__frame"><img src="assets/media/sap-etabs-comparer.png" alt="SAP2000 and ETABS comparer" decoding="async"></div>
+          <figcaption class="mono"><span>Fig 03</span> SAP ↔ ETABS Comparer · two live models, side by side</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot__frame"><img src="assets/media/raft-piles.png" alt="Raft on Piles geo spring iterator" decoding="async"></div>
+          <figcaption class="mono"><span>Fig 04</span> Raft on Piles · pile springs iterated to convergence</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot__frame"><img src="assets/media/warning-resolver.png" alt="Warning Parser log dashboard" decoding="async"></div>
+          <figcaption class="mono"><span>Fig 05</span> Warning Parser · a .wrn file grouped into real issues</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot__frame"><img src="assets/media/springs-from-safe.png" alt="Import springs from SAFE" decoding="async"></div>
+          <figcaption class="mono"><span>Fig 06</span> Springs from SAFE · one soil idealisation for both models</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot__frame"><img src="assets/media/quant-boq.png" alt="Quantimania quantity takeoff" decoding="async"></div>
+          <figcaption class="mono"><span>Fig 07</span> Quantimania · concrete, rebar and steel by story</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot__frame"><img src="assets/media/etabs-claude.png" alt="Claude AI panel inside ETABS Co-Pilot" decoding="async"></div>
+          <figcaption class="mono"><span>Fig 08</span> Claude AI · natural-language control of the active model</figcaption>
+        </figure>
+        <div class="gallery__end">
+          <span class="gallery__end-num">+7</span>
+          <p>more tools in the same sidebar.</p>
+          <ul class="mono">
+            <li>SAP → ETABS Converter</li>
+            <li>Export Geometry to RAM</li>
+            <li>ETABS → spColumn</li>
+            <li>Export Data for Power BI</li>
+            <li>Spring Safety Scan</li>
+            <li>Design Combination Selector</li>
+            <li>ORCA</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="gallery" id="copilot">
     <div class="gallery__intro">
       <p class="label mono"><span>(04)</span> Case study</p>
@@ -516,6 +639,11 @@
     <p class="label mono"><span>(07)</span> Contact</p>
     <h2 class="contact__title" data-split>Got a model that<br>needs a <em>tool</em>?</h2>
 
+    <canvas class="contact__stream" data-clawd-stream aria-hidden="true"></canvas>
+    <figure class="contact__clawd" data-clawd>
+      <svg viewBox="1 -1 21 13.5" role="img" aria-label="Claude Code's pixel mascot in a lilac hard hat, a T-square leaning beside it, typing on a laptop that streams binary toward the email button"></svg>
+    </figure>
+
     <div class="contact__row">
       <a class="contact__mail" href="mailto:you@example.com" data-magnetic data-cursor="Write">
         <span class="ph">you@example.com</span><span class="arrow" aria-hidden="true">↗</span>
@@ -545,6 +673,12 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="assets/field.js?v=4"></script>
 <script src="assets/beam.js?v=5"></script>
-<script src="assets/main.js?v=5"></script>
+<script src="assets/main.js?v=6"></script>
+<!-- kinetic studies: three.js r160 (the last release with a classic build), then the scenes -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="assets/motion.js?v=1"></script>
+<script src="assets/models.js?v=2"></script>
+<script src="assets/kinetic.js?v=3"></script>
+<script src="assets/clawd.js?v=1"></script>
 </body>
 </html>

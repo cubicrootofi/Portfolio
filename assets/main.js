@@ -95,7 +95,7 @@
     const count = $('[data-loader-count]');
     const title = $('.hero__title');
     const chars = $$('.ch', title);
-    const fade = [...$$('.hero__top > *'), ...$$('.hero__bottom > *')];
+    const fade = [...$$('.hero__top > *'), ...$$('.hero__puppet'), ...$$('.hero__bottom > *')];
     loader?.classList.add('is-run');
 
     gsap.set(chars, { yPercent: 115 });
@@ -246,7 +246,7 @@
       });
     });
 
-    $$('.label, .section__note, .gallery__quote, .gallery__lede, .gallery__facts, .contact__row, .kit__grid > div, .ibeam__note, .ibeam__spec').forEach(el => {
+    $$('.label, .section__note, .gallery__quote, .gallery__lede, .gallery__facts, .contact__row, .kit__grid > div, .ibeam__note, .ibeam__spec, .kinetic__copy > p:not(.label), .kinetic__legend, .connection__parts, .kinetic .scene').forEach(el => {
       gsap.from(el, {
         y: 24, opacity: 0, duration: 1.1, ease: 'expo.out',
         scrollTrigger: { trigger: el, start: 'top 92%' },

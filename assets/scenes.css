@@ -1,0 +1,89 @@
+/* Kinetic studies: three.js scenes built by models.js and run by kinetic.js.
+   The marionette hangs in the hero, the tensegrity follows the beam, and the steel
+   connection follows selected work. Only scene and section styles live here; the
+   rest of the page is styled by style.css. */
+
+.scene { position: relative; min-width: 0; margin: 0; }
+.scene__kicker { display: flex; justify-content: space-between; gap: 12px; padding-top: 13px; border-top: 1px solid var(--line-2); color: var(--muted); font-size: 10px; }
+.scene__kicker span:last-child { color: var(--dim); text-align: right; }
+.scene__surface { position: relative; height: clamp(380px, 39vw, 600px); isolation: isolate; cursor: grab; touch-action: pan-y; outline-offset: -3px; border-radius: 2px; }
+.scene__surface:active { cursor: grabbing; }
+.scene__surface:focus-visible { outline: 1px solid var(--accent); }
+.scene__surface canvas, .scene__fallback { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; }
+.scene__surface canvas { opacity: 0; transition: opacity 0.5s; }
+.scene.is-ready .scene__surface canvas { opacity: 1; }
+.scene.is-ready .scene__fallback { visibility: hidden; }
+.scene.is-fallback .scene__control { display: none; }
+.scene__surface::before { content: ""; position: absolute; inset: 12.5%; z-index: -1; background: radial-gradient(ellipse, rgba(169, 150, 226, 0.055), transparent 65%); pointer-events: none; }
+.scene__caption { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 58px; padding: 5px 0; border-top: 1px solid var(--line); }
+.scene__hint { max-width: 48ch; color: var(--muted); font-size: 9px; text-transform: none; letter-spacing: 0.01em; }
+.scene__reset { flex: none; min-height: 44px; padding: 8px 0 8px 10px; color: var(--fg-2); font-size: 10px; }
+.scene__reset:hover { color: var(--accent); }
+.scene__control { display: flex; align-items: center; gap: 18px; margin: 8px 0 24px; }
+.scene__control label { min-width: 66px; color: var(--muted); font-size: 10px; }
+.scene__control input { flex: 1; min-width: 0; min-height: 28px; accent-color: var(--accent); cursor: ew-resize; }
+.scene__control output { min-width: 4ch; color: var(--accent); font-size: 10px; text-align: right; }
+
+/* the custom cursor stands in for grab / resize cursors */
+html.has-cursor .scene__surface, html.has-cursor .scene__control input { cursor: none; }
+
+/* The marionette shares the hero with the big title: it hangs in the free space on the
+   right, clear of the name and above the intro row. */
+.hero__puppet {
+  position: absolute;
+  z-index: 0;
+  top: 134px; /* hero padding + the top row + 24px */
+  right: var(--gutter);
+  width: min(34vw, 520px);
+}
+/* what's left between the top row and the intro row, less the kicker and caption */
+.hero__puppet .scene__surface { height: clamp(220px, calc(100vh - 370px), 600px); height: clamp(220px, calc(100svh - 370px), 600px); }
+
+/* Study sections */
+.kinetic { display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: 7vw; border-top: 1px solid var(--line); }
+.kinetic--connection { grid-template-columns: 1.2fr 1fr; }
+/* the column is as wide as its grid track, so each title line stays on one line;
+   the body copy keeps its own narrower measure */
+.kinetic__copy { min-width: 0; }
+.kinetic__copy > :not(.kinetic__title) { max-width: 470px; }
+.kinetic__title { margin: 28px 0 24px; font-family: var(--serif); font-size: clamp(44px, 4.8vw, 82px); font-weight: 400; line-height: 0.99; letter-spacing: -0.025em; white-space: nowrap; }
+.kinetic__title em { color: var(--accent); }
+.kinetic__copy > p:not(.label):not(.kinetic__aside) { max-width: 37ch; color: var(--fg-2); font-size: 15px; line-height: 1.75; }
+.kinetic__legend { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 30px; color: var(--muted); font-size: 10px; }
+.kinetic__legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend-bar { width: 20px; height: 5px; border-radius: 2px; background: #99969f; }
+.legend-cable { width: 20px; height: 1px; background: var(--accent); }
+.kinetic__aside { margin: 44px 0 0; color: var(--muted); font-size: 10px; line-height: 1.8; }
+.connection__parts { margin: 34px 0 0; padding: 0; list-style: none; color: var(--fg-2); font-size: 10px; }
+.connection__parts li { padding: 13px 0; border-top: 1px solid var(--line); }
+.connection__parts span { display: inline-block; width: 40px; color: var(--accent); }
+
+@media (max-width: 1000px) {
+  .kinetic { gap: 4vw; }
+  .scene__kicker { font-size: 9px; }
+  .scene__kicker span:last-child { display: none; }
+}
+
+@media (max-width: 820px) {
+  /* the marionette joins the hero's flow, between the name and the intro */
+  .hero { grid-template-rows: auto 1fr auto auto; }
+  .hero__puppet { position: relative; top: auto; right: auto; width: auto; margin-top: 28px; }
+  .hero__puppet .scene__surface { height: 400px; }
+
+  .kinetic, .kinetic--connection { grid-template-columns: 1fr; gap: 40px; }
+  .kinetic--connection .kinetic__copy { grid-row: 1; }
+  .kinetic__copy { max-width: none; }
+  .kinetic__title { font-size: clamp(44px, 8.5vw, 64px); }
+  .kinetic__aside { margin-top: 25px; }
+  .scene__surface { height: 420px; }
+}
+
+@media (max-width: 400px) {
+  .scene__caption { gap: 8px; }
+  .scene__hint { max-width: 33ch; }
+  .hero__puppet .scene__surface { height: 360px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene__surface canvas { transition: none; }
+}
